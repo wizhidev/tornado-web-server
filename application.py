@@ -6,7 +6,8 @@ from tornado.ioloop import IOLoop
 from tornado.httpserver import HTTPServer
 from library.Urls import route
 from controllers.Error import NotFoundHandler
-from conf import conf
+from conf import conf, log
+from oslo_context import context
 
 
 class Application(web.Application):
@@ -20,8 +21,11 @@ class Application(web.Application):
 
         super(Application, self).__init__(route.get_urls(), **settings)
 
+
 if __name__ == '__main__':
-    print("http server start, Ctrl + C to stop...")
+    log.info("http server start, Ctrl + C to stop...")
+
+    context.RequestContext()
     http_server = HTTPServer(Application(), xheaders=True)
     http_server.listen(conf.port)
     tornado.ioloop.IOLoop.instance().start()

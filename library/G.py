@@ -1,4 +1,6 @@
 from sqlalchemy.orm import scoped_session
+
+from library.MyMongodb import MyMongo
 from mapper.init import UnitymobSession
 from conf import conf
 from library.MyRedis import MyRedis
@@ -35,6 +37,10 @@ class G(object):
     def redis(self):
         return MyRedis.getInstance(host=conf.redis.host, port=conf.redis.port, password=conf.redis.password,
                                    decode_responses=False)
+
+    @property
+    def mongo(self):
+        return MyMongo.getInstance(conf.mongo.dsn, conf.mongo.dbname).get_mongodb_client
 
     @property
     def rabbitmq(self):

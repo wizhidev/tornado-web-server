@@ -48,6 +48,14 @@ conf.register_cli_opts([
     cfg.StrOpt('prefix', default='unitymob_'),
 ], redis)
 
+# mongodb
+mongo = cfg.OptGroup(name='mongo', title="mongodb 相关配置")
+conf.register_group(mongo)
+conf.register_cli_opts([
+    cfg.StrOpt('dsn', default=''),
+    cfg.StrOpt('dbname', default=''),
+], mongo)
+
 # rabbitmq
 rabbitmq = cfg.OptGroup(name='rabbitmq', title="Rabbitmq 相关配置")
 conf.register_group(rabbitmq)

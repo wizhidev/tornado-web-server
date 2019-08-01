@@ -19,6 +19,10 @@ class BaseService(object):
         return self.g.redis
 
     @property
+    def mongo(self):
+        return self.g.mongo
+
+    @property
     def rpc(self):
         return self.g.rpc
 

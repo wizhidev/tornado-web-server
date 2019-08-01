@@ -5,8 +5,15 @@ from library.Handlers import BaseHandler
 from library.Result import Result
 from library.Decorate import Return
 from library.Route import route
+from service.LogsService import LogsService
 from service.UserService import UserService
 from controllers.forms import *
+
+
+@route(r"/logs")
+class LogsHandler(BaseHandler):
+    def post(self):
+        return LogsService().register_logs("1111", 'login', '11111111')
 
 
 @route(r"/user/login")

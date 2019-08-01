@@ -29,6 +29,10 @@ class BaseDAO():
         return self.g.session
 
     @property
+    def mongo(self):
+        return self.g.mongo
+
+    @property
     def jolly_session(self):
         return self.g.jolly_session
 

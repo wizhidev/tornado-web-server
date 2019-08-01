@@ -56,3 +56,6 @@ class AuthException(CustomException):
 
 class RoleException(CustomException):
     error_13000 = '该角色已经存在，无法添加'
+
+class LogsException(CustomException):
+    error_14000 = '资源重复'
