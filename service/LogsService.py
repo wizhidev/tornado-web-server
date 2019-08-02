@@ -7,7 +7,6 @@
 import pymongo
 import re
 
-from conf import log
 from library.Exception import LogsException
 from mapper.LogsDo import LogsModel
 from service.BaseService import BaseService

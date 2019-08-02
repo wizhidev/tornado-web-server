@@ -7,13 +7,12 @@ from mapper.UserDO import UserDO
 from mapper.UserRoleDO import UserRoleDO
 
 
-def make_token():
-    """ 生成访问token """
-    return str(uuid.uuid1())
-
-
 class UserDAO(BaseDAO):
     """ 用户类相关原子操作 """
+
+    def make_token(self):
+        """ 生成访问token """
+        return str(uuid.uuid1())
 
     def get_user_by_username(self, username):
         """ 根据用户名获取用户信息 """

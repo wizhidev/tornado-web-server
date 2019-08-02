@@ -18,14 +18,12 @@ class LogsHandler(BaseHandler):
 
 @route(r"/user/login")
 class UserLoginHandler(BaseHandler):
-    def post(self):
+    @Return
+    def post(self, *args, **kwargs):
         frm = UserLoginForm(self)
         if not frm.validate():
             raise UserException(code=10001, desc="请传入正确的参数")
-            return
-
         return UserService().login(frm.username, frm.password)
-
 
 @route(r"/user/logout")
 class UserLogoutHandler(BaseHandler):

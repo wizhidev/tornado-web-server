@@ -8,6 +8,7 @@ from library.Exception import CustomException
 from library.G import G
 from library.Result import Result
 from library.Utils import Utils
+from service.UserService import UserService
 
 
 class BaseHandler(RequestHandler):
@@ -45,3 +46,28 @@ class BaseHandler(RequestHandler):
 
     def options(self, *args, **kwargs):
         self.set_status(204)
+
+    def prepare(self):
+        if self.request.method == 'OPTIONS':
+            return self.options()
+
+        if self.request.path not in ["/user/login"]:
+            token = self.request.headers.get("X-Token", None)
+            try:
+                assert token is not None
+                data = UserService().get_user_by_token(token)
+                if data is not None:
+                    self.uid = data['id']
+                    self.token = token
+                else:
+                    raise CustomException(code=1001)
+
+                UserService().have_power(self.uid, self.request.path)
+
+            except AssertionError as ae:
+                raise CustomException(code=1002)
+
+        try:
+            self.post_arguments = json.loads(self.request.body.decode('utf-8'))
+        except Exception as ex:
+            pass

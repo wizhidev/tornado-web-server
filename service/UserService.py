@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+from conf import log
 from .BaseService import BaseService
 from mapper.UserDO import UserDO
 from mapper.UserRoleDO import UserRoleDO
@@ -12,7 +12,7 @@ from dao.AuthDAO import AuthDAO
 
 class UserService(BaseService):
     def __init__(self):
-        self.userDAO = UserDAO
+        self.userDAO = UserDAO.getInstance()
         self.authDAO = AuthDAO.getInstance()
         super().__init__()
 
@@ -25,12 +25,12 @@ class UserService(BaseService):
 
     def get_user_by_username(self, username):
         """ 根据用户名获取用户信息 """
-        return self.userDAO.get_user_by_username(self, username)
+        return self.userDAO.get_user_by_username(username)
 
     @Transaction(name="session")
     def login(self, username=None, password=None):
         """ 判断用户是否允许登陆 """
-        user = self.get_user_by_username(username)
+        user = self.userDAO.get_user_by_username(username)
         try:
             assert user is not None
             if user.is_valid == 'no':
